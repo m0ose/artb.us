@@ -8,7 +8,7 @@
     <!-- update the version number as needed -->
     <script  src="/__/firebase/7.5.2/firebase-app.js"></script>
     <script  src="/__/firebase/7.5.2/firebase-analytics.js"></script>
-    <!-- <script  src="/__/firebase/7.5.2/firebase-database.js"></script> -->
+    <script  src="/__/firebase/7.5.2/firebase-database.js"></script>
 
     <style media="screen">
       body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
@@ -59,7 +59,7 @@
     </footer>
 
     <script>
-      const lastAccident = new Date('December 11, 2019, 16:21')
+      let lastAccident = new Date('December 13, 2019, 15:02') //new Date('December 11, 2019, 16:21')
       document.addEventListener('DOMContentLoaded', function() {
         setInterval(updateTimeSinceLastAccident,1000)
         updateTimeSinceLastAccident()
@@ -79,8 +79,6 @@
           var str = `${days} days ${hours} hours ${minutes} minutes and ${seconds} seconds`
           dv.innerHTML = str
       }
-    </script>
-    <script defer>
       // Firebase configuration
       var firebaseConfig = {
         apiKey: "AIzaSyCWHEmx0NCdOueDfwVOSESLkkpf0djc9hk",
@@ -95,6 +93,16 @@
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
       firebase.analytics();
+      const db = firebase.database()
+      const rootRef = db.ref()
+      rootRef.child('lastCrash').on('value',(ev)=>{
+        const da = new Date(ev.val())
+        console.log('updated last crash date is ', da)
+        if (da) {
+          lastAccident = da
+        }
+      })
+
     </script>
   </body>
 </html>
