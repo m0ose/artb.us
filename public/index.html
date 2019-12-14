@@ -1,108 +1,193 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ART B.us</title>
 
-    <!-- update the version number as needed -->
-    <script  src="/__/firebase/7.5.2/firebase-app.js"></script>
-    <script  src="/__/firebase/7.5.2/firebase-analytics.js"></script>
-    <script  src="/__/firebase/7.5.2/firebase-database.js"></script>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ART B.us</title>
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-      .ablue {
-        background-color: #039be5;
-        color: white;
-      }
-      .rblack {
-        background-color: #000000;
-        color: white;
-      }
-      .tred {
-        background-color: #cc0000;
-        color: white;
-      }
-      .small-circle {
-        border-radius: 90px;
-        font-weight: bold;
-        padding: 10px 15px 10px 15px;
-      }
-      footer {
-          clear: both;
-          position: absolute;
-          bottom: 2px;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h1><span class="small-circle ablue">A</span>
-        <span class="small-circle rblack">R</span>
-        <span class="small-circle tred">T</span><span class="small-circle">B.us</span></h1>
-      <h2>It has been <span id='countdown'></span> since the last accident.</h2>
-    </div>
-    <footer>
-      Contact: support at artb.us 
-    </footer>
+  <!-- update the version number as needed -->
+  <script src="/__/firebase/7.5.2/firebase-app.js"></script>
+  <script src="/__/firebase/7.5.2/firebase-analytics.js"></script>
+  <script src="/__/firebase/7.5.2/firebase-database.js"></script>
 
-    <script>
-      let lastAccident = new Date('December 13, 2019, 15:02') //new Date('December 11, 2019, 16:21')
-      document.addEventListener('DOMContentLoaded', function() {
-        setInterval(updateTimeSinceLastAccident,1000)
-        updateTimeSinceLastAccident()
-      });
+  <style media="screen">
+    body {
+      background: #ECEFF1;
+      color: rgba(0, 0, 0, 0.87);
+      font-family: Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
 
-      function updateTimeSinceLastAccident(){
-        let dv = document.getElementById('countdown')
-          var res = Math.abs(new Date() - lastAccident) / 1000;
-          // get total days between two dates
-          var days = Math.floor(res / 86400);                 
-          // get hours        
-          var hours = Math.floor(res / 3600) % 24;        
-          // get minutes
-          var minutes = Math.floor(res / 60) % 60;
-          // get seconds
-          var seconds = Math.floor(res % 60);
-          var str = `${days} days ${hours} hours ${minutes} minutes and ${seconds} seconds`
-          dv.innerHTML = str
+    #message {
+      background: white;
+      max-width: 360px;
+      margin: 100px auto 16px;
+      padding: 32px 24px;
+      border-radius: 3px;
+    }
+
+    #message h2 {
+      color: #ffa100;
+      font-weight: bold;
+      font-size: 16px;
+      margin: 0 0 8px;
+    }
+
+    #message h1 {
+      font-size: 22px;
+      font-weight: 300;
+      color: rgba(0, 0, 0, 0.6);
+      margin: 0 0 16px;
+    }
+
+    #message p {
+      line-height: 140%;
+      margin: 16px 0 24px;
+      font-size: 14px;
+    }
+
+    #message a {
+      display: block;
+      text-align: center;
+      background: #039be5;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: white;
+      padding: 16px;
+      border-radius: 4px;
+    }
+
+    #message,
+    #message a {
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    }
+
+    #load {
+      color: rgba(0, 0, 0, 0.4);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+
+      body,
+      #message {
+        margin-top: 0;
+        background: white;
+        box-shadow: none;
       }
-      // Firebase configuration
-      var firebaseConfig = {
-        apiKey: "AIzaSyCWHEmx0NCdOueDfwVOSESLkkpf0djc9hk",
-        authDomain: "artbus-8cfae.firebaseapp.com",
-        databaseURL: "https://artbus-8cfae.firebaseio.com",
-        projectId: "artbus-8cfae",
-        storageBucket: "artbus-8cfae.appspot.com",
-        messagingSenderId: "437200293798",
-        appId: "1:437200293798:web:146ff9f7172e080c0b4967",
-        measurementId: "G-DYJ1NHPKD7"
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      firebase.analytics();
-      const db = firebase.database()
-      const rootRef = db.ref()
-      rootRef.child('lastCrash').on('value',(ev)=>{
-        const da = new Date(ev.val())
-        console.log('updated last crash date is ', da)
-        if (da) {
-          lastAccident = da
-        }
-      })
 
-    </script>
-  </body>
+      body {
+        border-top: 16px solid #ffa100;
+      }
+    }
+
+    .ablue {
+      background-color: #039be5;
+      color: white;
+    }
+
+    .rblack {
+      background-color: #000000;
+      color: white;
+    }
+
+    .tred {
+      background-color: #cc0000;
+      color: white;
+    }
+
+    .small-circle {
+      border-radius: 90px;
+      font-weight: bold;
+      padding: 10px 15px 10px 15px;
+    }
+
+    footer {
+      clear: both;
+      position: absolute;
+      bottom: 2px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="message">
+    <h1><span class="small-circle ablue">A</span>
+      <span class="small-circle rblack">R</span>
+      <span class="small-circle tred">T</span><span class="small-circle">B.us</span></h1>
+    <h3>It has been <span id='countdown'></span> since the last accident.</h3>
+    <h2>There have been <span id='crash-number'></span> accidents so far.</h2>
+  </div>
+  <footer>
+    Contact: support at artb.us
+  </footer>
+
+  <script>
+    let lastAccident = new Date('December 13, 2019, 15:02') //new Date('December 11, 2019, 16:21')
+    let crashNumber = 7
+
+    document.addEventListener('DOMContentLoaded', function () {
+      setInterval(updateTimeSinceLastAccident, 1000)
+      updateTimeSinceLastAccident()
+      updateCrashNumber()
+    });
+
+    function updateCrashNumber() {
+      let dv = document.getElementById('crash-number')
+      dv.innerHTML = crashNumber
+    }
+
+    function updateTimeSinceLastAccident() {
+      let dv = document.getElementById('countdown')
+      var res = Math.abs(new Date() - lastAccident) / 1000;
+      // get total days between two dates
+      var days = Math.floor(res / 86400);
+      // get hours        
+      var hours = Math.floor(res / 3600) % 24;
+      // get minutes
+      var minutes = Math.floor(res / 60) % 60;
+      // get seconds
+      var seconds = Math.floor(res % 60);
+      var str = `${days} days ${hours} hours ${minutes} minutes and ${seconds} seconds`
+      dv.innerHTML = str
+    }
+    // Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyCWHEmx0NCdOueDfwVOSESLkkpf0djc9hk",
+      authDomain: "artbus-8cfae.firebaseapp.com",
+      databaseURL: "https://artbus-8cfae.firebaseio.com",
+      projectId: "artbus-8cfae",
+      storageBucket: "artbus-8cfae.appspot.com",
+      messagingSenderId: "437200293798",
+      appId: "1:437200293798:web:146ff9f7172e080c0b4967",
+      measurementId: "G-DYJ1NHPKD7"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    //
+    // update data base on firebase values. This way I can update it with my phone, and no
+    //  reload is needed.
+    const db = firebase.database()
+    const rootRef = db.ref()
+    rootRef.child('lastCrash').on('value', (ev) => {
+      const da = new Date(ev.val())
+      console.log('updated last crash date is ', da)
+      if (da) {
+        lastAccident = da
+      }
+    })
+    rootRef.child('crashNumber').on('value', (ev) => {
+      const cn = ev.val()
+      if (cn) {
+        crashNumber = cn
+      }
+    })
+
+  </script>
+</body>
+
 </html>
