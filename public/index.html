@@ -28,8 +28,15 @@
       border-radius: 3px;
     }
 
-    #message h2 {
+    #message h3 {
       color: #ffa100;
+      font-weight: bold;
+      font-size: 16px;
+      margin: 0 0 8px;
+    }
+
+    #message h2 {
+      color: rgba(100, 40, 20, 0.8);
       font-weight: bold;
       font-size: 16px;
       margin: 0 0 8px;
@@ -38,7 +45,7 @@
     #message h1 {
       font-size: 22px;
       font-weight: 300;
-      color: rgba(0, 0, 0, 0.6);
+      color: rgba(0, 0, 0, 0.8);
       margin: 0 0 16px;
     }
 
@@ -118,8 +125,8 @@
     <h1><span class="small-circle ablue">A</span>
       <span class="small-circle rblack">R</span>
       <span class="small-circle tred">T</span><span class="small-circle">B.us</span></h1>
-    <h3>It has been <span id='countdown'></span> since the last accident.</h3>
-    <h2>There have been <span id='crash-number'></span> accidents so far.</h2>
+    <h2>It has been <span id='countdown'></span> since the last accident.</h2>
+    <h3>There have been <span id='crash-number'></span> accidents so far.</h3>
   </div>
   <footer>
     Contact: support at artb.us
@@ -127,17 +134,17 @@
 
   <script>
     let lastAccident = new Date('December 13, 2019, 15:02') //new Date('December 11, 2019, 16:21')
-    let crashNumber = 7
+    let crashNumber = 6
 
     document.addEventListener('DOMContentLoaded', function () {
       setInterval(updateTimeSinceLastAccident, 1000)
       updateTimeSinceLastAccident()
-      updateCrashNumber()
+      updateCrashNumber(crashNumber)
     });
 
-    function updateCrashNumber() {
+    function updateCrashNumber(val) {
       let dv = document.getElementById('crash-number')
-      dv.innerHTML = crashNumber
+      dv.innerHTML = val
     }
 
     function updateTimeSinceLastAccident() {
@@ -184,6 +191,7 @@
       const cn = ev.val()
       if (cn) {
         crashNumber = cn
+        updateCrashNumber(crashNumber)
       }
     })
 
