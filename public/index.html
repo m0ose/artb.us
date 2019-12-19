@@ -123,7 +123,7 @@
       <span class="small-circle rblack">R</span>
       <span class="small-circle tred">T</span><span class="small-circle">B.us</span></h1>
     <h2>It has been <span id='countdown'></span> since the last accident.</h2>
-    <h3>There have been <span id='crash-number'></span> accidents so far.</h3>
+    <h3>There have been <span id='crash-number'></span> accidents in the last <span id='days-since'></span> days.</h3>
   </div>
   <footer>
     Contact: support at artb.us
@@ -137,6 +137,7 @@
       setInterval(updateTimeSinceLastAccident, 1000)
       updateTimeSinceLastAccident()
       updateCrashNumber(crashNumber)
+      updateDaysSinceDec1st2019()
     });
 
     function updateCrashNumber(val) {
@@ -144,17 +145,28 @@
       dv.innerHTML = val
     }
 
+    function dateDiff(d1, d2) {
+      var res = Math.abs(d2 - d1) / 1000
+      // get total days between two dates
+      var days = Math.floor(res / 86400)
+      // get hours        
+      var hours = Math.floor(res / 3600) % 24
+      // get minutes
+      var minutes = Math.floor(res / 60) % 60
+      // get seconds
+      var seconds = Math.floor(res % 60)
+      return {res,days,hours,minutes,seconds}
+    }
+
+    function updateDaysSinceDec1st2019() {
+      const dv = document.getElementById('days-since')
+      const {days} = dateDiff(new Date('Nov 30 2019 5:30:00'), new Date())
+      dv.innerHTML = days
+    }
+
     function updateTimeSinceLastAccident() {
       let dv = document.getElementById('countdown')
-      var res = Math.abs(new Date() - lastAccident) / 1000;
-      // get total days between two dates
-      var days = Math.floor(res / 86400);
-      // get hours        
-      var hours = Math.floor(res / 3600) % 24;
-      // get minutes
-      var minutes = Math.floor(res / 60) % 60;
-      // get seconds
-      var seconds = Math.floor(res % 60);
+      const {days, hours,minutes, seconds} = dateDiff(lastAccident, new Date())
       var str = `${days} days ${hours} hours ${minutes} minutes and ${seconds} seconds`
       dv.innerHTML = str
     }
